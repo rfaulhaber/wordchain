@@ -1,0 +1,5 @@
+cat
+dog
+eat
+cats
+cars
