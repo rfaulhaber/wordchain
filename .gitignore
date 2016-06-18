@@ -23,5 +23,6 @@ _testmain.go
 *.test
 *.prof
 
-# ignore word source file
+# ignore word source file and test text files
 words.txt
+test.txt
