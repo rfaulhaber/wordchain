@@ -18,14 +18,15 @@ func main() {
 		fmt.Println("Please specify a word list!")
 	} else {
 		root := node.BuildTree(*indexFlagPtr)
+
+		startWord := args[0]
+		goalWord := args[1]
+
+		fmt.Println("words: ", startWord, " ", goalWord)
+
+		// tests if HasWord works
+		fmt.Println(root.HasWord("conk"))
+		fmt.Println(root.HasWord("cong"))
+		fmt.Println(root.HasWord("dog"))
 	}
-
-	startWord := args[0]
-	goalWord := args[1]
-
-	fmt.Println("words: ", startWord, " ", goalWord)
-
-	// tests if HasWord works
-	fmt.Println(root.HasWord("bricked"))
-	fmt.Println(root.HasWord("dog"))
 }

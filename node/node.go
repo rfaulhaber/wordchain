@@ -23,7 +23,7 @@ func (n *Node) AddChild(e string) {
 
 func (n *Node) HasChild(c string) (bool, int) {
     for i, node := range n.Children {
-        if string(node.Edge[0]) == c {
+        if string(node.Edge[0]) == c || string(node.Edge[0]) == string(c) + "*" {
             return true, i
         }
     }
@@ -35,16 +35,17 @@ func (n *Node) HasWord(word string) bool {
     if len(word) == 1 {
         return string(n.Edge[0]) == string(word[0]) && string(n.Edge[1]) == TERMINAL_EDGE
     } else {
-        // TODO: do I need to make this distinction?
-        if string(n.Edge[0]) == ROOT_EDGE {
-            if hasChild, index := n.HasChild(string(word[0])); hasChild {
-                return n.Children[index].HasWord(word[1:])
+        if n.Edge == "$" {
+            hasChild, index := n.HasChild(string(word[0]));
+            if hasChild {
+                return n.Children[index].HasWord(word);
             } else {
                 return false;
             }
         } else {
-            if hasChild, index := n.HasChild(string(word[0])); hasChild {
-                return n.HasWord(word[1:])
+            hasChild, index := n.HasChild(string(word[1]));
+            if string(n.Edge[0]) == string(word[0]) && hasChild {
+                return n.Children[index].HasWord(word[1:])
             } else {
                 return false;
             }
@@ -85,6 +86,7 @@ func DescendTreeAddChild(word string, n *Node) {
             if suffix == "" {
                 c += TERMINAL_EDGE
             }
+
 			n.AddChild(c)
 			DescendTreeAddChild(suffix, n.Children[len(n.Children) - 1])
 		}
